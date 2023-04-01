@@ -1,10 +1,10 @@
 ```@meta
 CurrentModule = TheArtOfComputerProgramming
 ```
+# The Art Of Computer Programming
 
-# TheArtOfComputerProgramming
+These are my notes from reading Knuth: The art of Computer programming.
 
-Documentation for [TheArtOfComputerProgramming](https://github.com/tp2750/TheArtOfComputerProgramming.jl).
 
 ```@index
 ```

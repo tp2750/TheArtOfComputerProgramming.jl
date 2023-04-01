@@ -16,6 +16,8 @@ makedocs(;
     ),
     pages=[
         "Home" => "index.md",
+        "1.1: Euclid alg" => "1.1_euclid.md",
+        "1.2.10 Alg Analysis" => "1.2.10_algorithm_analysis.md",
     ],
 )
 
