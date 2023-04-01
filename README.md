@@ -8,3 +8,8 @@ Notes from reading Knuth: The Art of Computer Programming.
 
 See docs.
 
+Book website: 
+https://www-cs-faculty.stanford.edu/~knuth/taocp.html
+
+
+He recomends the companion book, CMath: https://en.wikipedia.org/wiki/Concrete_Mathematics [pdf](https://www.csie.ntu.edu.tw/~r97002/temp/Concrete%20Mathematics%202e.pdf)
