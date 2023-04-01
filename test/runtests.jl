@@ -1,6 +1,4 @@
 using TheArtOfComputerProgramming
 using Test
 
-@testset "TheArtOfComputerProgramming.jl" begin
-    # Write your tests here.
-end
+include("1.1_euclid.jl")

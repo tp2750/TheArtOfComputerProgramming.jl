@@ -3,6 +3,10 @@ uuid = "a2d8b244-25fa-45bb-8385-903e6ebb3f12"
 authors = ["Thomas Poulsen <ta.poulsen@gmail.com> and contributors"]
 version = "1.0.0-DEV"
 
+[deps]
+LsqFit = "2fda8390-95c7-5789-9bda-21331edee243"
+Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
+
 [compat]
 julia = "1.6"
 
