@@ -1,7 +1,7 @@
 using Test
 
 @testset "Digraph" begin
-    g1 = SimpleDigraph("Simple", [:A, :B, :C, :D], [(:A,:B), (:B,:C), (:A,:C)])
+    g1 = SimpleDigraph("Simple", [:F, :A, :B, :C, :D, :E], [(:A,:B), (:B,:C), (:A,:C), (:A, :E), (:F,:A), (:F, :C)])
     g2 = Digraph(g1)
     g3 = SimpleDigraph(g2)
     g4 = Digraph(g3)

@@ -1,8 +1,9 @@
 ## SGB Datastructure
+using StructEquality
 
 struct Arc
     TIP::Int ## Index of end vertex
-    NEXT::Union{String,Missing} ## Key of next arct starting at same node
+    NEXT::Union{String,Missing} ## Key of next arc starting at same node
 end
 struct Vertex
     NAME::String ## Name of vertex
@@ -12,6 +13,8 @@ struct Digraph
     vertices::Vector{Vertex}
     arcs::Dict{String,Arc}
 end
+
+@def_structequal Digraph
 
 ## Accessor Methods
 NAME(v::Vertex) = v.NAME
@@ -56,6 +59,8 @@ struct SimpleDigraph
     arcs::Vector{Tuple{Symbol,Symbol}}
 end
 
+@def_structequal SimpleDigraph
+
 ## Convert simple graph to Knuth graph
 function Digraph(g::SimpleDigraph)
     ## loop over arcs
@@ -67,12 +72,12 @@ function Digraph(g::SimpleDigraph)
     vertices = Vertex[]
     arcs = Dict{String, Arc}()
     for a in g.arcs ## Loop over arcs
-        @show a
+        @debug a
         if a[2] in vertices
-            @info "end node $(a[2]) already found"
+            @debug "end node $(a[2]) already found"
         else
             push!(vertices, Vertex(string(a[2]), missing)) ## add end node
-            @info "Added end node $(a[2]) as vertex"
+            @debug "Added end node $(a[2]) as vertex"
         end
         key = string(a[1])*string(a[2]) ## "AB"
         tip = findfirst(a[2], vertices) ## end-node was already added
@@ -82,11 +87,11 @@ function Digraph(g::SimpleDigraph)
             current_last_key = findlast(vertices[start_index], arcs) ## last arch from start-node
             if ismissing(current_last_key) ## no next
                 this_v = vertices[start_index]
-                @info "No next. Update $(NAME(this_v)) to point to $(key)"
+                @debug "No next. Update $(NAME(this_v)) to point to $(key)"
                 vertices[start_index] = Vertex(NAME(this_v), key) ## update vertex                
             else
                 current_last_arc = arcs[current_last_key]
-                @info "Current last arc is $(current_last_key). Update this to point to $key"
+                @debug "Current last arc is $(current_last_key). Update this to point to $key"
                 merge!(arcs, Dict(current_last_key => Arc(TIP(current_last_arc), key))) ## update current_last
             end
         else ## new start node
@@ -103,6 +108,33 @@ function Digraph(g::SimpleDigraph)
     Digraph(vertices, arcs)
 end
 
+## Convert from Knuth 2 simple digraph
+function SimpleDigraph(g::Digraph; name = "MyDigraph")
+    ## I need to run over this twice:
+    ## 1. collect all vertices
+    ## 2. collect all arcs
+    nodes = Symbol[]
+    arcs = Tuple{Symbol,Symbol}[]
+    for v in g.vertices ## get vector of vertices
+        push!(nodes, Symbol(NAME(v)))
+    end
+    for v in g.vertices ## look again to get arcs
+        n1 = NAME(v)
+        current_arc_key = ARCS(v)
+        if ismissing(current_arc_key)
+            @debug "$(NAME(v)) has no arcs"
+        else
+            while !ismissing(current_arc_key)
+                tip_index = TIP(g.arcs[current_arc_key])
+                n2 = NAME(g.vertices[tip_index])
+                @debug "($n1,$n2)"
+                push!(arcs,(Symbol(n1), Symbol(n2)))
+                current_arc_key = NEXT(g.arcs[current_arc_key])
+            end
+        end
+    end
+    SimpleDigraph(name, nodes,arcs)
+end
 
 ## Plot the naive graph
 function dot(g::SimpleDigraph)
