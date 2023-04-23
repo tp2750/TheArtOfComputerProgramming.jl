@@ -1,6 +1,8 @@
 module TheArtOfComputerProgramming
 
 using Plots, LsqFit
+using StructEquality
+
 include("1.1_Alg-E_euclid.jl")
 export E, T
 
